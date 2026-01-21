@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
         <a href="/electronica">Electrónica</a> |
         <a href="/ropa">Ropa</a> |
         <a href="/hogar">Hogar</a> |
-        <a href="/">Todos los productos</a>
+        <a href="/productos">Todos los productos</a>
     </nav>
     `);
 });
@@ -25,7 +25,7 @@ app.get("/ropa", (req, res) => {
 });
 
 app.get("/hogar", (req, res) => {
-  const productos = getProductsByCategory("Hogar");
+  const productos = getProductsByCategory("hogar");
   res.send(generateProductsPage("Todo para el Hogar", productos));
 });
 
@@ -41,8 +41,7 @@ function generateProductsPage(title, products) {
       <strong>${p.name}</strong> - ${p.price}€ 
       <br><small>Stock: ${p.stock} unidades</small>
     </li>
-  `,
-    ).join(""); // Convertimos el array de strings en un solo string
+  `).join("");
 
   return `
     <h1>${title}</h1>
