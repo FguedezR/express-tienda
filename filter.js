@@ -79,12 +79,18 @@ function getProductsByCategory(tipo) {
   return productsData.filter(p => p.category === tipo);
 }
 
+// para caros y baratos
 function getCheapProducts() {
   return productsData.filter(p => p.price < 100);
 }
 
+function getExpensiveProducts() {
+    return productsData.filter(p => p.price > 100)
+}
+
 module.exports = { 
-  getProductsByCategory, 
-  getCheapProducts,
-  productsData 
+    getProductsByCategory, 
+    getCheapProducts, 
+    getExpensiveProducts, 
+    productsData 
 };

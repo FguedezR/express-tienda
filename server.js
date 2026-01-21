@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
-const { getProductsByCategory, productsData } = require("./filter");
+const {
+  getProductsByCategory,
+  getCheapProducts,
+  getExpensiveProducts,
+  productsData,
+} = require("./filter.js");
 
 app.get("/", (req, res) => {
   res.send(`
@@ -9,6 +14,8 @@ app.get("/", (req, res) => {
         <a href="/electronica">Electrónica</a> |
         <a href="/ropa">Ropa</a> |
         <a href="/hogar">Hogar</a> |
+        <a href="/productos/baratos">Productos por menos de 100€</a> |
+        <a href="/productos/caros">Productos por más de 100€</a> |
         <a href="/productos">Todos los productos</a>
     </nav>
     `);
@@ -34,6 +41,20 @@ app.get("/productos", (req, res) => {
   res.send(html);
 });
 
+// productos < 100
+app.get("/productos/baratos", (req, res) => {
+  const baratos = getCheapProducts();
+  res.send(generateProductsPage("Menos de 100€", baratos));
+});
+
+// productos > 100
+app.get("/productos/caros", (req, res) => {
+  const caros = getExpensiveProducts();
+  res.send(generateProductsPage("Más de 100€", caros));
+});
+
+
+
 function generateProductsPage(title, products) {
   const productList = products
     .map((p) => `
@@ -53,6 +74,8 @@ function generateProductsPage(title, products) {
     <a href="/">Volver a la tienda</a>
   `;
 }
+
+
 
 app.use((req, res) => {
   res
